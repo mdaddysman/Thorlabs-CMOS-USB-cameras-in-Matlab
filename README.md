@@ -8,7 +8,7 @@ Compatable cameras can be found on the [Thorlabs Website](https://www.thorlabs.c
 
 ## Installing 
 1. Matlab must be configured with a [C++ compiler](https://www.mathworks.com/support/compilers.html). 
-2. Install the uc480 Version 4.20 SDK from the [Thorlabs Website](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=ThorCam). [(Direct Link)](https://www.thorlabs.com/software//MUC/DCx/Software/ThorlabsDCx_camera_V4.20.zip)
+2. Install the uc480 Version 4.20 SDK [(Direct Link)](https://www.thorlabs.com/software//MUC/DCx/Software/ThorlabsDCx_camera_V4.20.zip) from the [Thorlabs Website](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=ThorCam). 
 3. Copy `uc480.h` and `uc480_64.lib` from the Thorlabs C++ SDK into the code directory.
 4. Run `Install64.m`.
 
