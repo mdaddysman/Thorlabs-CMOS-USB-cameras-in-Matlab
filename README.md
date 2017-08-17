@@ -1,5 +1,5 @@
-# Thorlabs-CMOS-USB-cameras-in-Matlab
-Code to use the C++ API for Thorlabs CMOS USB cameras in Matlab.
+# Software to use Thorlabs CMOS USB cameras in Matlab
+This software uses the C++ API for Thorlabs CMOS USB cameras to display the camera images in Matlab. A lightwight display program demostrates the features. 
 
 ### Reference
 Compatable cameras can be found on the [Thorlabs Website](https://www.thorlabs.com/newgrouppage9.cfm?objectgroup_id=4024).
