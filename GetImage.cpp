@@ -59,27 +59,51 @@ void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
         return;
     }
     
+    // 2023-07-18: Edit to call is_FreezeVideo() > 1 time in attempt to fix the FreezeVideo error
     result = is_FreezeVideo(phCam,IS_WAIT);
-    if(result != IS_SUCCESS)
-    {
-        is_FreeImageMem(phCam,pImage,imgID);
-        mxFree(pImage);
-        is_ExitCamera(phCam);
-        sprintf(errbuffer,"Failed to 1 FreezeVideo: r = %i",result);
-        mexErrMsgTxt(errbuffer);
-        return;
+    INT attemptCounter = 0;
+    INT maxAttemptCounter = 50;
+    attemptCounter = attemptCounter + 1;
+    while(result != IS_SUCCESS){
+        attemptCounter = attemptCounter + 1;
+        result = is_FreezeVideo(phCam, IS_WAIT);
+        if (attemptCounter == maxAttemptCounter && result != IS_SUCCESS){
+            is_FreeImageMem(phCam,pImage,imgID);
+            mxFree(pImage);
+            is_ExitCamera(phCam);
+            sprintf(errbuffer,"Failed to loop for %i loops. Return from FreezeVideo: r = %i",maxAttemptCounter, result);
+            mexErrMsgTxt(errbuffer);
+            return;
+        }
     }
-    
-    result = is_FreezeVideo(phCam,IS_WAIT);
-    if(result != IS_SUCCESS)
-    {
-        is_FreeImageMem(phCam,pImage,imgID);
-        mxFree(pImage);
-        is_ExitCamera(phCam);
-        sprintf(errbuffer,"Failed to 2 FreezeVideo: r = %i",result);
-        mexErrMsgTxt(errbuffer);
-        return;
+    // Comment out following if statement if you want to squash output
+    if (attemptCounter > 1){
+        char testerrbuffer[50];
+        sprintf(testerrbuffer, "Looped freeze video %i times\n", attemptCounter);
+        mexPrintf(testerrbuffer);
+        mexEvalString("drawnow;");
     }
+
+    // if(result != IS_SUCCESS)
+    // {
+    //     is_FreeImageMem(phCam,pImage,imgID);
+    //     mxFree(pImage);
+    //     is_ExitCamera(phCam);
+    //     sprintf(errbuffer,"Failed to 1 FreezeVideo: r = %i",result);
+    //     mexErrMsgTxt(errbuffer);
+    //     return;
+    // }
+    // 
+    // result = is_FreezeVideo(phCam,IS_WAIT);
+    // if(result != IS_SUCCESS)
+    // {
+    //     is_FreeImageMem(phCam,pImage,imgID);
+    //     mxFree(pImage);
+    //     is_ExitCamera(phCam);
+    //     sprintf(errbuffer,"Failed to 2 FreezeVideo: r = %i",result);
+    //     mexErrMsgTxt(errbuffer);
+    //     return;
+    // }
     
     result = is_FreeImageMem(phCam,pImage,imgID);
     if(result != IS_SUCCESS)
